@@ -1,0 +1,26 @@
+<div class="container">
+  <h2>Lista de Clientes</h2>
+  {{ clientes | json }}
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Fecha Registro</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (cliente of clientes(); track cliente.id) {
+        <tr>
+          <td>{{ cliente.name }}</td>
+          <td>{{ cliente.email }}</td>
+          <td>{{ cliente.registrationDate | date:'dd/MM/yyyy' }}</td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="3">No hay clientes registrados.</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
