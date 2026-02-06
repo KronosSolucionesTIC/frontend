@@ -1,0 +1,46 @@
+/* Centra el formulario en pantalla */
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 20px;
+}
+
+/* Estilo de la tarjeta */
+.custom-card {
+  width: 100%;
+  max-width: 450px;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05); /* Sombra suave */
+}
+
+/* Organiza los campos uno debajo del otro */
+.flex-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Espacio entre campos */
+  margin-top: 20px;
+}
+
+mat-card-title {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Caja de debug (JSON) */
+.debug-box {
+  background: #f5f5f5;
+  padding: 15px;
+  border-radius: 0 0 12px 12px;
+  font-size: 0.85rem;
+  color: #666;
+  border-top: 1px solid #eee;
+}
+
+button {
+  margin-top: 10px;
+  height: 45px; /* Botón un poco más alto para mejor click */
+}

@@ -1,21 +1,25 @@
-<div class="menu-header">
-  <h3>Panel de Control</h3>
-</div>
-
-<mat-nav-list class="custom-nav-list">
-  @for (item of menuItems(); track item.route) {
-    <a mat-list-item 
-       [routerLink]="item.route" 
-       routerLinkActive="active-link"
-       [routerLinkActiveOptions]="{exact: true}"
-       class="menu-item">
-      <mat-icon matListItemIcon class="menu-icon">{{ item.icon }}</mat-icon>
-      <span matListItemTitle class="menu-title">{{ item.title }}</span>
-    </a>
-  } @empty {
-    <div class="loading-state">
-      <mat-spinner diameter="20"></mat-spinner>
-      <p>Cargando menú...</p>
-    </div>
-  }
-</mat-nav-list>
+<mat-card class="example-card" appearance="outlined">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>Panel de Control</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-tab-group>
+      @for (item of menuItems(); track item.route) {
+        <mat-tab [label]="item.title">
+          <mat-icon aria-hidden="false" aria-label="Example home icon" [fontIcon]="item.icon"></mat-icon>
+          <ng-template matTabContent>
+            @if (item.route === '/clients') {
+              <app-client></app-client>
+            }       
+          </ng-template>
+        </mat-tab>
+      } @empty {
+        <div class="loading-state">
+          <mat-spinner diameter="20"></mat-spinner>
+          <p>Cargando menú...</p>
+        </div>
+      }
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>
