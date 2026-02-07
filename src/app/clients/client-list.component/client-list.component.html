@@ -8,6 +8,8 @@
         <th>Nombre</th>
         <th>Email</th>
         <th>Fecha Registro</th>
+        <th>Modificar</th>
+        <th>Eliminar</th>
       </tr>
     </thead>
     <tbody>
@@ -16,6 +18,16 @@
           <td>{{ cliente.name }}</td>
           <td>{{ cliente.email }}</td>
           <td>{{ cliente.registrationDate | date:'dd/MM/yyyy' }}</td>
+          <td>
+            <button matMiniFab color="accent" (click)="onEdit(cliente.id)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+          <td>
+            <button matMiniFab class="btn-delete" (click)="onDelete(cliente)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
         </tr>
       } @empty {
         <tr>

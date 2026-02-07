@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Importante para el *ngFor
+import { CommonModule } from '@angular/common';
 import { ClientService } from '../services/client.service';
 import { Client } from '../intefaces/client.interface';
 import {
@@ -9,6 +9,8 @@ import { ClientFormComponent } from '../client-form.component/client-form.compon
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
+import { ConfirmDeleteComponent } from '../../shared/components/confirm-delete/confirm-delete.component';
+import { NavigationService } from '../../shared/services/navigation';
 
 @Component({
   selector: 'app-client',
@@ -18,6 +20,7 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './client-list.component.html'
 })
 export class ClientListComponent implements OnInit {
+  private navigationService = inject(NavigationService)
   readonly dialog = inject(MatDialog);
   clientes = signal<Client[]>([]);
   private clientService = inject(ClientService);
@@ -26,9 +29,7 @@ export class ClientListComponent implements OnInit {
     this.clientService.getClients().subscribe({
       next: (response) => {
         if (response.success) {
-          // Así se actualiza un signal
           this.clientes.set(response.data); 
-          console.log('Signal actualizado con:', this.clientes());
         }
       }
     });
@@ -36,7 +37,32 @@ export class ClientListComponent implements OnInit {
 
   openDialog() {
     this.dialog.open(ClientFormComponent, {
-      data: { client: null } // Pasas datos vacíos para crear
+      data: { client: null }
     });
+  }
+
+  onDelete(client: Client){
+    const dialogRef = this.dialog.open(ConfirmDeleteComponent, {
+      data: { name: client.name }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.clientService.deleteClient(client.id).subscribe({
+          next: (response) => {
+            if (response.success) {
+              const snackRef = this.navigationService.openSnackBar(response.message);
+              snackRef.afterDismissed().subscribe(() => {
+                this.navigationService.reloadPage();
+              });
+            }
+          }
+        });
+      }
+    });
+  }
+
+  onEdit(id: string){
+    console.log(['id a editar', id])
   }
 }

@@ -1,0 +1,17 @@
+.delete-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #d32f2f; /* Rojo para énfasis */
+}
+
+.warning-text {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 10px;
+  font-style: italic;
+}
+
+mat-dialog-content {
+  min-width: 300px;
+}

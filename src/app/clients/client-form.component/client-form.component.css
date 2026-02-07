@@ -44,3 +44,16 @@ button {
   margin-top: 10px;
   height: 45px; /* Botón un poco más alto para mejor click */
 }
+
+.mat-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.actions-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+}

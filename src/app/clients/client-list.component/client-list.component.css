@@ -22,3 +22,15 @@ section {
   justify-content: space-between;
   flex-wrap: wrap;
 }
+
+/* Botón Editar - Amarillo */
+.btn-edit {
+  background-color: #ffc107 !important; /* Amarillo Material */
+  color: #000000 !important;           /* Icono negro para contraste */
+}
+
+/* Botón Eliminar - Rojo */
+.btn-delete {
+  background-color: #f44336 !important; /* Rojo Material */
+  color: #ffffff !important;           /* Icono blanco para contraste */
+}

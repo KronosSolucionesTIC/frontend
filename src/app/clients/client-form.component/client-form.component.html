@@ -1,7 +1,7 @@
 <div class="form-container">
   <mat-card appearance="outlined" class="custom-card">
     <mat-card-header>
-      <mat-card-title>Registro de Usuario</mat-card-title>
+      <mat-card-title>Registro de cliente</mat-card-title>
     </mat-card-header>
 
     <mat-card-content>
@@ -9,8 +9,8 @@
         
         <mat-form-field appearance="outline">
           <mat-label>Nombre Completo</mat-label>
-          <input matInput formControlName="nombre" placeholder="Ej. Juan Pérez">
-          @if (form.get('nombre')?.hasError('required')) {
+          <input matInput formControlName="name" placeholder="Ej. Juan Pérez">
+          @if (form.get('name')?.hasError('required')) {
             <mat-error>El nombre es obligatorio</mat-error>
           }
         </mat-form-field>
@@ -23,15 +23,15 @@
           }
         </mat-form-field>
 
-        <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">
-          Enviar Datos
-        </button>
+        <div class="actions-container">
+          <button mat-stroked-button type="button" (click)="onCancel()">
+            Cancelar
+          </button>
+          <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">
+            Enviar Datos
+          </button>
+        </div>
       </form>
     </mat-card-content>
-
-    <mat-card-footer>
-      <div class="debug-box">
-      </div>
-    </mat-card-footer>
   </mat-card>
 </div>
