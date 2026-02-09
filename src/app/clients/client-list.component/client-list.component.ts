@@ -62,7 +62,29 @@ export class ClientListComponent implements OnInit {
     });
   }
 
-  onEdit(id: string){
-    console.log(['id a editar', id])
+  onEdit(id: string) {
+    const clienteAEditar = this.clientes().find(c => c.id === id);
+
+    if (!clienteAEditar) return;
+
+    const dialogRef = this.dialog.open(ClientFormComponent, {
+      data: { client: clienteAEditar }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadClients();
+      }
+    });
+  }
+
+  loadClients() {
+    this.clientService.getClients().subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.clientes.set(response.data);
+        }
+      }
+    });
   }
 }

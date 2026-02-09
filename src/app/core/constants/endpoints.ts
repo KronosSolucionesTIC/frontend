@@ -5,7 +5,8 @@ export const ENDPOINTS = {
   CLIENTS: {
     GET: `${environment.apiUrl}/clients`,
     CREATE: `${environment.apiUrl}/clients`,
-    DELETE: `${environment.apiUrl}/clients`
+    DELETE: `${environment.apiUrl}/clients`,
+    UPDATE: `${environment.apiUrl}/clients`,
   },
   AUTH: `${environment.apiUrl}/auth/login`
 }

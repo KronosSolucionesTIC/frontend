@@ -4,7 +4,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Dialog } from '@angular/cdk/dialog';
 import { ClientService } from '../services/client.service';
 import { NavigationService } from '../../shared/services/navigation';
@@ -28,11 +28,13 @@ export class ClientFormComponent {
   readonly navigationService = inject(NavigationService);
   readonly enviado = signal(false);
   readonly form: FormGroup;
+  readonly data = inject<{ client: any }>(MAT_DIALOG_DATA, { optional: true });
+  readonly isEditMode = signal(!!this.data?.client);
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]]
+      name: [this.data?.client?.name || '', [Validators.required, Validators.minLength(3)]],
+      email: [this.data?.client?.email || '', [Validators.required, Validators.email]]
     });
   }
 
@@ -42,17 +44,19 @@ export class ClientFormComponent {
       return;
     }
 
-    this.clientService.createClient(this.form.value).subscribe({
-      next: (response) => {
+    const request = this.isEditMode() 
+      ? this.clientService.updateClient(this.data!.client.id, this.form.value)
+      : this.clientService.createClient(this.form.value);
+
+    request.subscribe({
+      next: (response: { success: any; }) => {
         if (response.success) {
-          this.onCancel();
-          const snackRef = this.navigationService.openSnackBar('Cliente creado correctamente');
-          snackRef.afterDismissed().subscribe(() => {
-            this.navigationService.reloadPage();
-          });
+          const accion = this.isEditMode() ? 'actualizado' : 'creado';
+          this.navigationService.openSnackBar(`Cliente ${accion} correctamente`);
+          this.dialogRef.close(true);
         }
       }
-    });      
+    });  
   }
 
   onCancel() {

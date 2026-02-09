@@ -1,4 +1,4 @@
-import { Injectable, inject, PLATFORM_ID } from '@angular/core';
+import { Injectable, inject, PLATFORM_ID, signal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
@@ -10,6 +10,9 @@ import { ENDPOINTS } from '../../core/constants/endpoints';
 export class ClientService {
   private platformId = inject(PLATFORM_ID);
   private http = inject(HttpClient);
+  private clients = signal<Client[]>([]);
+
+  selectedClient = signal<any | null>(null);
 
   getClients(): Observable<ApiResponse<Client[]>> {
     const headers = this.buildHeaders();
@@ -19,6 +22,12 @@ export class ClientService {
   createClient(client: CreateClientRequest) {
     const headers = this.buildHeaders();
     return this.http.post<ApiResponse<Client[]>>(ENDPOINTS.CLIENTS.CREATE, client, { headers });
+  }
+
+  updateClient(id: number, client: Client) {
+    const headers = this.buildHeaders();
+    const url = `${ENDPOINTS.CLIENTS.UPDATE}/${id}`;
+    return this.http.put<ApiResponse<Client[]>>(url, client, { headers });
   }
 
   deleteClient(id: string) {
