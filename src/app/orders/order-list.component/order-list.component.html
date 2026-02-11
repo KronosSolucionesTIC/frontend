@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="actions-container">
+    <button matButton="tonal" (click)="openDialog()">Nueva orden</button>
+  </div>
+
+  <h2>Lista de ordenes</h2>
+  {{ orders | json }}
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Email</th>
+        <th>Total</th>
+        <th>Modificar</th>
+        <th>Eliminar</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (order of orders(); track order.id) {
+        <tr>
+          <td>{{ order.nombreCliente }}</td>
+          <td>{{ order.emailCliente }}</td>
+          <td>{{ order.total | currency }}</td>
+          <td>
+            <button matMiniFab color="accent" (click)="onEdit(order.id)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </td>
+          <td>
+            <button matMiniFab class="btn-delete" (click)="onDelete(order)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="3">No hay ordenes registradas.</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

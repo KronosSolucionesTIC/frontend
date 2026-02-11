@@ -11,33 +11,47 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { ConfirmDeleteComponent } from '../../shared/components/confirm-delete/confirm-delete.component';
 import { NavigationService } from '../../shared/services/navigation';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @Component({
   selector: 'app-client',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatDividerModule, MatIconModule],
+  imports: [
+    CommonModule, 
+    MatButtonModule, 
+    MatDividerModule, 
+    MatIconModule,
+    MatGridListModule,
+    MatButtonModule,
+    MatIconModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './client-list.component.html'
 })
 export class ClientListComponent implements OnInit {
   private navigationService = inject(NavigationService)
   readonly dialog = inject(MatDialog);
-  clientes = signal<Client[]>([]);
   private clientService = inject(ClientService);
+  clients = signal<Client[]>([]);  
 
   ngOnInit(): void {
     this.clientService.getClients().subscribe({
       next: (response) => {
         if (response.success) {
-          this.clientes.set(response.data); 
+          this.clients.set(response.data); 
         }
       }
     });
   }
 
   openDialog() {
-    this.dialog.open(ClientFormComponent, {
+    const dialogRef = this.dialog.open(ClientFormComponent, {
       data: { client: null }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadClients();
+      }
     });
   }
 
@@ -51,10 +65,8 @@ export class ClientListComponent implements OnInit {
         this.clientService.deleteClient(client.id).subscribe({
           next: (response) => {
             if (response.success) {
-              const snackRef = this.navigationService.openSnackBar(response.message);
-              snackRef.afterDismissed().subscribe(() => {
-                this.navigationService.reloadPage();
-              });
+                this.navigationService.openSnackBar(response.message);
+                this.loadClients();
             }
           }
         });
@@ -63,7 +75,7 @@ export class ClientListComponent implements OnInit {
   }
 
   onEdit(id: string) {
-    const clienteAEditar = this.clientes().find(c => c.id === id);
+    const clienteAEditar = this.clients().find(c => c.id === id);
 
     if (!clienteAEditar) return;
 
@@ -82,7 +94,7 @@ export class ClientListComponent implements OnInit {
     this.clientService.getClients().subscribe({
       next: (response) => {
         if (response.success) {
-          this.clientes.set(response.data);
+          this.clients.set(response.data);
         }
       }
     });

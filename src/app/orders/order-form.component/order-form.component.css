@@ -18,8 +18,8 @@
 
 /* Organiza los campos uno debajo del otro */
 .flex-form {
-  display: flex;
-  flex-direction: column;
+  display: flex !important;
+  flex-direction: column !important;
   gap: 8px; /* Espacio entre campos */
   margin-top: 20px;
 }
@@ -43,7 +43,11 @@ button {
 
 .actions-container {
   display: flex;
-  justify-content: flex-end;
   gap: 12px;
-  margin-top: 16px;
+  justify-content: flex-start; /* Alinea a la izquierda */
+  margin-top: 8px;
+}
+
+mat-form-field {
+  width: 100%;
 }

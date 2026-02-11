@@ -1,7 +1,10 @@
 <div class="container">
-  <button matButton="tonal" (click)="openDialog()">Nuevo cliente</button>
+  <div class="actions-container">
+    <button matButton="tonal" (click)="openDialog()">Nuevo cliente</button>
+  </div>
+
   <h2>Lista de Clientes</h2>
-  {{ clientes | json }}
+  {{ clients | json }}
   <table>
     <thead>
       <tr>
@@ -13,25 +16,25 @@
       </tr>
     </thead>
     <tbody>
-      @for (cliente of clientes(); track cliente.id) {
+      @for (client of clients(); track client.id) {
         <tr>
-          <td>{{ cliente.name }}</td>
-          <td>{{ cliente.email }}</td>
-          <td>{{ cliente.registrationDate | date:'dd/MM/yyyy' }}</td>
+          <td>{{ client.name }}</td>
+          <td>{{ client.email }}</td>
+          <td>{{ client.registrationDate | date:'dd/MM/yyyy' }}</td>
           <td>
-            <button matMiniFab color="accent" (click)="onEdit(cliente.id)">
+            <button matMiniFab color="accent" (click)="onEdit(client.id)">
               <mat-icon>edit</mat-icon>
             </button>
           </td>
           <td>
-            <button matMiniFab class="btn-delete" (click)="onDelete(cliente)">
+            <button matMiniFab class="btn-delete" (click)="onDelete(client)">
               <mat-icon>delete</mat-icon>
             </button>
           </td>
         </tr>
       } @empty {
         <tr>
-          <td colspan="3">No hay clientes registrados.</td>
+          <td colspan="5">No hay clientes registrados.</td>
         </tr>
       }
     </tbody>

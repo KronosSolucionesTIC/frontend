@@ -1,4 +1,6 @@
-import { inject, Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { HttpHeaders } from '@angular/common/http';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
@@ -6,6 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class NavigationService {
   readonly _snackBar = inject(MatSnackBar);
+  private platformId = inject(PLATFORM_ID);
 
   constructor() { }
 
@@ -27,5 +30,26 @@ export class NavigationService {
     return this._snackBar.open(message, 'Cerrar', {
         duration: 2000
       });
+  }
+
+  private getToken(): string {
+    let token = '';
+    
+    if (isPlatformBrowser(this.platformId)) {
+      token = localStorage.getItem('token') || '';
+    }
+
+    return token;
+  }
+
+  private getHeaders(token: string) : HttpHeaders {
+    return new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  }
+
+  buildHeaders() : HttpHeaders {
+    const token = this.getToken();    
+    const headers = this.getHeaders(token);
+
+    return headers;
   }
 }

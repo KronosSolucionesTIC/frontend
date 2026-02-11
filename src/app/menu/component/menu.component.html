@@ -1,25 +1,33 @@
-<mat-card class="example-card" appearance="outlined">
+<mat-card class="card" appearance="outlined">
   <mat-card-header>
-    <div mat-card-avatar class="example-header-image"></div>
+    <div mat-card-avatar class="card-header"></div>
     <mat-card-title>Panel de Control</mat-card-title>
   </mat-card-header>
-  <mat-card-content>
-    <mat-tab-group>
-      @for (item of menuItems(); track item.route) {
-        <mat-tab [label]="item.title">
-          <mat-icon aria-hidden="false" aria-label="Example home icon" [fontIcon]="item.icon"></mat-icon>
-          <ng-template matTabContent>
-            @if (item.route === '/clients') {
-              <app-client></app-client>
-            }       
-          </ng-template>
-        </mat-tab>
-      } @empty {
-        <div class="loading-state">
-          <mat-spinner diameter="20"></mat-spinner>
-          <p>Cargando menú...</p>
-        </div>
-      }
-    </mat-tab-group>
-  </mat-card-content>
+  <div class="class-content">
+    <mat-card-content>
+      <mat-tab-group dynamicHeight="false">
+        @for (item of menuItems(); track item.route) {
+          <mat-tab [label]="item.title">
+            <mat-icon aria-hidden="false" aria-label="Example home icon" [fontIcon]="item.icon"></mat-icon>
+            <ng-template matTabContent>
+              <div class="tab-body">
+                <br>
+                @if (item.route === '/clients') {
+                  <app-client></app-client>
+                }      
+                @if (item.route === '/orders') {
+                  <app-order-list></app-order-list>
+                }  
+              </div>
+            </ng-template>
+          </mat-tab>
+        } @empty {
+          <div class="loading-state">
+            <mat-spinner diameter="20"></mat-spinner>
+            <p>Cargando menú...</p>
+          </div>
+        }
+      </mat-tab-group>
+      </mat-card-content>
+    </div>
 </mat-card>

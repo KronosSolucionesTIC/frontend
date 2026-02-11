@@ -9,6 +9,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ClientListComponent } from "../../clients/client-list.component/client-list.component";
+import { OrderListComponent } from '../../orders/order-list.component/order-list.component';
 
 @Component({
   selector: 'app-menu',
@@ -21,7 +22,7 @@ import { ClientListComponent } from "../../clients/client-list.component/client-
     MatIconModule,
     MatSidenavModule,
     MatCardModule,
-    MatTabsModule, ClientListComponent, ClientListComponent],
+    MatTabsModule, ClientListComponent, ClientListComponent, OrderListComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,  
   templateUrl: './menu.component.html'
 })
