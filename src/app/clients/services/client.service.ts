@@ -9,23 +9,23 @@ import { ENDPOINTS } from '../../core/constants/endpoints';
 export class ClientService {
   private http = inject(HttpClient);
 
-  selectedClient = signal<any | null>(null);
+  selectedClient = signal<Client | null>(null);
 
   getClients(): Observable<ApiResponse<Client[]>> {
     return this.http.get<ApiResponse<Client[]>>(ENDPOINTS.CLIENTS.GET);
   }
 
   createClient(client: CreateClientRequest) {
-    return this.http.post<ApiResponse<Client[]>>(ENDPOINTS.CLIENTS.CREATE, client);
+    return this.http.post<ApiResponse<Client>>(ENDPOINTS.CLIENTS.CREATE, client);
   }
 
   updateClient(id: number, client: Client) {
     const url = `${ENDPOINTS.CLIENTS.UPDATE}/${id}`;
-    return this.http.put<ApiResponse<Client[]>>(url, client);
+    return this.http.put<ApiResponse<Client>>(url, client);
   }
 
   deleteClient(id: string) {
     const url = `${ENDPOINTS.CLIENTS.DELETE}/${id}`;
-    return this.http.delete<ApiResponse<Client[]>>(url);
+    return this.http.delete<ApiResponse<Client>>(url);
   }
 }

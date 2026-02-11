@@ -1,4 +1,4 @@
-import { Component, inject, signal, OnInit } from '@angular/core';
+import { Component, inject, signal, effect } from '@angular/core';
 import { OrderService } from '../services/order.service';
 import { Order } from '../interfaces/order.interface';
 import { CurrencyPipe, CommonModule } from '@angular/common';
@@ -9,24 +9,48 @@ import { MatDividerModule } from '@angular/material/divider';
 import { ConfirmDeleteComponent } from '../../shared/components/confirm-delete/confirm-delete.component';
 import { NavigationService } from '../../shared/services/navigation';
 import { OrderFormComponent } from '../order-form.component/order-form.component';
+import { PaginatorComponent} from "../../shared/components/paginator/paginator.component";
 
 @Component({
   selector: 'app-order-list',
-  imports: [CurrencyPipe, MatIcon, CommonModule,CommonModule, MatButtonModule, MatDividerModule, MatIconModule],
+  imports: [
+    CurrencyPipe, 
+    MatIcon, 
+    CommonModule,
+    MatButtonModule, 
+    MatDividerModule, 
+    MatIconModule, 
+    PaginatorComponent],
   standalone: true,
   templateUrl: './order-list.component.html'
 })
 
-export class OrderListComponent implements OnInit {
+export class OrderListComponent {
   private navigationService = inject(NavigationService);
   readonly dialog = inject(MatDialog);
-  private orderService = inject(OrderService);  
+  private orderService = inject(OrderService);
   
   orders = signal<Order[]>([]);
   totalCount = signal(0);
+  pagination = signal({ page: 1, limit: 5 });
 
-  ngOnInit() {
-    this.loadOrders();
+  constructor() {
+    effect(() => {
+      const { page, limit } = this.pagination();
+      this.fetchData(page, limit);
+    });
+  }
+
+  private fetchData(page: number, limit: number) {
+    console.log(['page', page, 'limit', limit]);
+    this.orderService.getOrders(page, limit).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.orders.set(response.data.items);
+          this.totalCount.set(response.data.totalItems);
+        }
+      }
+    });
   }
 
   openDialog() {
@@ -39,6 +63,11 @@ export class OrderListComponent implements OnInit {
         this.loadOrders();
       }
     });
+  }
+
+  updatePagination(newParams: { page: number, limit: number }) {
+    console.log(['newParams', newParams]);
+    this.pagination.set(newParams);
   }
 
   onDelete(order: Order){
@@ -79,13 +108,7 @@ export class OrderListComponent implements OnInit {
   }
 
   loadOrders() {
-    this.orderService.getOrders(1, 10).subscribe({
-      next: (response) => {
-        if (response.success) {
-          this.orders.set(response.data.items);
-          this.totalCount.set(response.data.totalItems);
-        }
-      }
-    });
+    const { page, limit } = this.pagination();
+    this.fetchData(page, limit);
   }
 }

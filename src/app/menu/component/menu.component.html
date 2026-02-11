@@ -1,33 +1,32 @@
 <mat-card class="card" appearance="outlined">
-  <mat-card-header>
-    <div mat-card-avatar class="card-header"></div>
-    <mat-card-title>Panel de Control</mat-card-title>
+  <mat-card-header style="justify-content: center;">
+    <div mat-card-avatar class="card-header" style="position: absolute; left: 16px;"></div>
+    <mat-card-title>
+      <h2 style="margin: 0; text-align: center;">Panel de Control</h2>
+    </mat-card-title>
   </mat-card-header>
+
   <div class="class-content">
-    <mat-card-content>
+    <mat-card-content style="flex: 1;">
       <mat-tab-group dynamicHeight="false">
         @for (item of menuItems(); track item.route) {
           <mat-tab [label]="item.title">
-            <mat-icon aria-hidden="false" aria-label="Example home icon" [fontIcon]="item.icon"></mat-icon>
             <ng-template matTabContent>
               <div class="tab-body">
                 <br>
-                @if (item.route === '/clients') {
-                  <app-client></app-client>
-                }      
-                @if (item.route === '/orders') {
-                  <app-order-list></app-order-list>
-                }  
+                @if (item.route === '/clients') { <app-client></app-client> }      
+                @if (item.route === '/orders') { <app-order-list></app-order-list> }  
               </div>
             </ng-template>
           </mat-tab>
-        } @empty {
-          <div class="loading-state">
-            <mat-spinner diameter="20"></mat-spinner>
-            <p>Cargando menú...</p>
-          </div>
         }
       </mat-tab-group>
-      </mat-card-content>
-    </div>
+    </mat-card-content>
+    
+    <mat-card-footer>
+      <p class="mat-small footer-copyright" style="text-align: center; padding: 16px; margin: 0; opacity: 0.6;">
+        &copy; 2026 Mi Aplicación. Todos los derechos reservados.
+      </p>
+    </mat-card-footer>
+  </div>
 </mat-card>

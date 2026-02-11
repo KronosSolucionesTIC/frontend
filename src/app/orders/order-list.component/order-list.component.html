@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" style="min-height: 75vh;">
   <div class="actions-container">
     <button matButton="tonal" (click)="openDialog()">Nueva orden</button>
   </div>
@@ -37,6 +37,15 @@
           <td colspan="3">No hay ordenes registradas.</td>
         </tr>
       }
+      <tr>
+        <td colspan="5">
+          <app-paginator 
+            [totalItems]="totalCount()" 
+            [pageSize]="pagination().limit"
+            (onChange)="updatePagination($event)">
+          </app-paginator>
+        </td>
+      </tr>
     </tbody>
   </table>
 </div>

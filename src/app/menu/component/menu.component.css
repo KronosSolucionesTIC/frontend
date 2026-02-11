@@ -1,0 +1,31 @@
+/* Centrado real del Header */
+::ng-deep .mat-mdc-card-header {
+  display: flex !important;
+  justify-content: center !important; /* Centra el contenido del flex */
+}
+
+::ng-deep .mat-mdc-card-header-text {
+  margin: 0 !important; /* Elimina el margen izquierdo que Material pone por defecto */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Hacer que la tarjeta crezca hacia abajo */
+.card {
+  min-height: 90vh; /* Ocupa el 90% de la pantalla */
+  display: flex;
+  flex-direction: column;
+}
+
+.class-content {
+  flex: 1; /* Esto obliga a este div a expandirse y llenar el hueco */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Asegurar que el contenido de la tab también use el espacio */
+.tab-body {
+  padding: 20px;
+  min-height: 400px; /* O el tamaño que prefieras */
+}

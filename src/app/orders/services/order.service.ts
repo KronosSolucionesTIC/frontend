@@ -17,16 +17,16 @@ export class OrderService {
   }
 
   createOrder(order: CreateOrderRequest){
-    return this.http.post<ApiResponse<Order[]>>(ENDPOINTS.ORDERS.CREATE, order);
+    return this.http.post<ApiResponse<Order>>(ENDPOINTS.ORDERS.CREATE, order);
   }
 
   updateOrder(id: number, order: Order) {
     const url = `${ENDPOINTS.ORDERS.UPDATE}/${id}`;
-    return this.http.put<ApiResponse<Order[]>>(url, order);
+    return this.http.put<ApiResponse<Order>>(url, order);
   }
 
   deleteOrder(id: string) {
     const url = `${ENDPOINTS.ORDERS.DELETE}/${id}`;
-    return this.http.delete<ApiResponse<Order[]>>(url);
+    return this.http.delete<ApiResponse<Order>>(url);
   }
 }
