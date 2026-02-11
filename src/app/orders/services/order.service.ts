@@ -20,7 +20,7 @@ export class OrderService {
     return this.http.post<ApiResponse<Order>>(ENDPOINTS.ORDERS.CREATE, order);
   }
 
-  updateOrder(id: number, order: Order) {
+  updateOrder(id: string, order: Order) {
     const url = `${ENDPOINTS.ORDERS.UPDATE}/${id}`;
     return this.http.put<ApiResponse<Order>>(url, order);
   }

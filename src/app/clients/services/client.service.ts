@@ -19,7 +19,7 @@ export class ClientService {
     return this.http.post<ApiResponse<Client>>(ENDPOINTS.CLIENTS.CREATE, client);
   }
 
-  updateClient(id: number, client: Client) {
+  updateClient(id: string, client: Client) {
     const url = `${ENDPOINTS.CLIENTS.UPDATE}/${id}`;
     return this.http.put<ApiResponse<Client>>(url, client);
   }

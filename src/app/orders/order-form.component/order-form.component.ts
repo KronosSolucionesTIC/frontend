@@ -7,10 +7,11 @@ import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from '@angular/material/select';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Dialog } from '@angular/cdk/dialog';
-import { NavigationService } from '../../shared/services/navigation';
+import { NavigationService } from '../../shared/services/navigation.service';
 import { OrderService } from '../services/order.service';
 import { Client } from '../../clients/intefaces/client.interface';
 import { ClientService } from '../../clients/services/client.service';
+import { Order } from '../interfaces/order.interface';
 
 @Component({
   selector: 'app-order-form',
@@ -32,7 +33,7 @@ export class OrderFormComponent implements OnInit {
   readonly navigationService = inject(NavigationService);
   readonly enviado = signal(false);
   readonly form: FormGroup;
-  readonly data = inject<{ order: any }>(MAT_DIALOG_DATA, { optional: true });
+  readonly data = inject<{ order: Order }>(MAT_DIALOG_DATA, { optional: true });
   readonly isEditMode = signal(!!this.data?.order);
   clients = signal<Client[]>([]); 
 
@@ -43,7 +44,7 @@ export class OrderFormComponent implements OnInit {
     });
   }
 
-  @Input() set initialData(order: any) {
+  @Input() set initialData(order: Order) {
     if (order) {
       this.isEditMode.set(true);
       this.form.patchValue(order);
@@ -75,7 +76,7 @@ export class OrderFormComponent implements OnInit {
       : this.orderService.createOrder(this.form.value);
 
     request.subscribe({
-      next: (response: { success: any; }) => {
+      next: (response: { success: boolean; }) => {
         if (response.success) {
           const accion = this.isEditMode() ? 'actualizada' : 'creada';
           this.navigationService.openSnackBar(`Orden ${accion} correctamente`);

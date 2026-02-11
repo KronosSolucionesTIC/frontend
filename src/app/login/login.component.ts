@@ -27,8 +27,6 @@ export class LoginComponent {
     this.authService.login(this.userData.username, this.userData.password).subscribe({
       next: (response) => {
         if (response.success) {
-          console.log('Token recibido:', response.data.token);
-          // Aquí puedes guardar el token en localStorage o redirigir
           localStorage.setItem('token', response.data.token);
           this.router.navigate(['/menu']);
         }

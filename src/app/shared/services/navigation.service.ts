@@ -12,23 +12,9 @@ export class NavigationService {
 
   constructor() { }
 
-  /**
-   * Refresca la página completa (Hard Refresh)
-   */
-  reloadPage(): void {
-    window.location.reload();
-  }
-
-  /**
-   * Regresa a la página anterior en el historial del navegador
-   */
-  goBack(): void {
-    window.history.back();
-  }
-
   openSnackBar(message: string) {
     return this._snackBar.open(message, 'Cerrar', {
-        duration: 2000
+        duration: 3000
       });
   }
 

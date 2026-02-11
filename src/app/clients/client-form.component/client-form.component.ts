@@ -7,7 +7,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Dialog } from '@angular/cdk/dialog';
 import { ClientService } from '../services/client.service';
-import { NavigationService } from '../../shared/services/navigation';
+import { NavigationService } from '../../shared/services/navigation.service';
+import { Client } from '../intefaces/client.interface';
 
 @Component({
   selector: 'app-client-form.component',
@@ -28,7 +29,7 @@ export class ClientFormComponent {
   readonly navigationService = inject(NavigationService);
   readonly enviado = signal(false);
   readonly form: FormGroup;
-  readonly data = inject<{ client: any }>(MAT_DIALOG_DATA, { optional: true });
+  readonly data = inject<{ client: Client }>(MAT_DIALOG_DATA, { optional: true });
   readonly isEditMode = signal(!!this.data?.client);
 
   constructor(private fb: FormBuilder) {
@@ -49,7 +50,7 @@ export class ClientFormComponent {
       : this.clientService.createClient(this.form.value);
 
     request.subscribe({
-      next: (response: { success: any; }) => {
+      next: (response: { success: boolean; }) => {
         if (response.success) {
           const accion = this.isEditMode() ? 'actualizado' : 'creado';
           this.navigationService.openSnackBar(`Cliente ${accion} correctamente`);

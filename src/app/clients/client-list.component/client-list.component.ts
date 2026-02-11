@@ -10,7 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { ConfirmDeleteComponent } from '../../shared/components/confirm-delete/confirm-delete.component';
-import { NavigationService } from '../../shared/services/navigation';
+import { NavigationService } from '../../shared/services/navigation.service';
 import { MatGridListModule } from '@angular/material/grid-list';
 
 @Component({

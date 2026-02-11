@@ -7,7 +7,7 @@ import { MatIcon, MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { ConfirmDeleteComponent } from '../../shared/components/confirm-delete/confirm-delete.component';
-import { NavigationService } from '../../shared/services/navigation';
+import { NavigationService } from '../../shared/services/navigation.service';
 import { OrderFormComponent } from '../order-form.component/order-form.component';
 import { PaginatorComponent} from "../../shared/components/paginator/paginator.component";
 
@@ -42,7 +42,6 @@ export class OrderListComponent {
   }
 
   private fetchData(page: number, limit: number) {
-    console.log(['page', page, 'limit', limit]);
     this.orderService.getOrders(page, limit).subscribe({
       next: (response) => {
         if (response.success) {
@@ -66,7 +65,6 @@ export class OrderListComponent {
   }
 
   updatePagination(newParams: { page: number, limit: number }) {
-    console.log(['newParams', newParams]);
     this.pagination.set(newParams);
   }
 
@@ -90,10 +88,8 @@ export class OrderListComponent {
   }
 
   onEdit(id: string) {
-    console.log(['id', id]);
     const ordenAEditar = this.orders().find(c => c.id === id);
 
-    console.log(['ordenAEditar', ordenAEditar]);
     if (!ordenAEditar) return;
 
     const dialogRef = this.dialog.open(OrderFormComponent, {
