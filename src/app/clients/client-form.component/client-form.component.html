@@ -1,34 +1,34 @@
 <div class="form-container">
   <mat-card appearance="outlined" class="custom-card">
     <mat-card-header>
-      <mat-card-title>Registro de cliente</mat-card-title>
+      <mat-card-title>{{ texts.TITLE }}</mat-card-title>
     </mat-card-header>
 
     <mat-card-content>
       <form [formGroup]="form" (ngSubmit)="onSubmit()" class="flex-form">
         
         <mat-form-field appearance="outline">
-          <mat-label>Nombre Completo</mat-label>
+          <mat-label>{{ texts.NAME }}</mat-label>
           <input matInput formControlName="name" placeholder="Ej. Juan Pérez">
           @if (form.get('name')?.hasError('required')) {
-            <mat-error>El nombre es obligatorio</mat-error>
+            <mat-error>{{ texts.VALIDATION_NAME }}</mat-error>
           }
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Correo Electrónico</mat-label>
+          <mat-label>{{ texts.EMAIL }}</mat-label>
           <input matInput type="email" formControlName="email" placeholder="usuario@correo.com">
           @if (form.get('email')?.hasError('email')) {
-            <mat-error>Formato de correo inválido</mat-error>
+            <mat-error>{{ texts.VALIDATIONE_EMAIL }}</mat-error>
           }
         </mat-form-field>
 
         <div class="actions-container">
           <button mat-stroked-button type="button" (click)="onCancel()">
-            Cancelar
+            {{ texts.CANCEL }}
           </button>
           <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">
-            Enviar Datos
+            {{ texts.SUBMIT }}
           </button>
         </div>
       </form>

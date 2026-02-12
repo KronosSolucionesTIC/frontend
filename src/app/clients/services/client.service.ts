@@ -15,16 +15,16 @@ export class ClientService {
     return this.http.get<ApiResponse<Client[]>>(ENDPOINTS.CLIENTS.GET);
   }
 
-  createClient(client: CreateClientRequest) {
+  createClient(client: CreateClientRequest): Observable<ApiResponse<Client>> {
     return this.http.post<ApiResponse<Client>>(ENDPOINTS.CLIENTS.CREATE, client);
   }
 
-  updateClient(id: string, client: Client) {
+  updateClient(id: string, client: Client): Observable<ApiResponse<Client>> {
     const url = `${ENDPOINTS.CLIENTS.UPDATE}/${id}`;
     return this.http.put<ApiResponse<Client>>(url, client);
   }
 
-  deleteClient(id: string) {
+  deleteClient(id: string): Observable<ApiResponse<Client>> {
     const url = `${ENDPOINTS.CLIENTS.DELETE}/${id}`;
     return this.http.delete<ApiResponse<Client>>(url);
   }

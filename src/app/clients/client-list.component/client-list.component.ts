@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ConfirmDeleteComponent } from '../../shared/components/confirm-delete/confirm-delete.component';
 import { NavigationService } from '../../shared/services/navigation.service';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { TEXTS } from '../../core/constants/texts';
 
 @Component({
   selector: 'app-client',
@@ -20,9 +21,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
     CommonModule, 
     MatButtonModule, 
     MatDividerModule, 
-    MatIconModule,
     MatGridListModule,
-    MatButtonModule,
     MatIconModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './client-list.component.html'
@@ -32,6 +31,7 @@ export class ClientListComponent implements OnInit {
   readonly dialog = inject(MatDialog);
   private clientService = inject(ClientService);
   clients = signal<Client[]>([]);  
+  readonly texts = TEXTS.CLIENT_LIST;
 
   ngOnInit(): void {
     this.clientService.getClients().subscribe({
@@ -43,7 +43,7 @@ export class ClientListComponent implements OnInit {
     });
   }
 
-  openDialog() {
+  openDialog(): void {
     const dialogRef = this.dialog.open(ClientFormComponent, {
       data: { client: null }
     });
@@ -55,7 +55,7 @@ export class ClientListComponent implements OnInit {
     });
   }
 
-  onDelete(client: Client){
+  onDelete(client: Client): void {
     const dialogRef = this.dialog.open(ConfirmDeleteComponent, {
       data: { name: client.name }
     });
@@ -74,7 +74,7 @@ export class ClientListComponent implements OnInit {
     });
   }
 
-  onEdit(id: string) {
+  onEdit(id: string): void {
     const clienteAEditar = this.clients().find(c => c.id === id);
 
     if (!clienteAEditar) return;
@@ -90,7 +90,7 @@ export class ClientListComponent implements OnInit {
     });
   }
 
-  loadClients() {
+  loadClients() : void {
     this.clientService.getClients().subscribe({
       next: (response) => {
         if (response.success) {

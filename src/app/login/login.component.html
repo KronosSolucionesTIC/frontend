@@ -1,19 +1,19 @@
 <div class="login-container">
   <mat-card class="login-card">
     <mat-card-header>
-      <mat-card-title>Iniciar Sesión</mat-card-title>
+      <mat-card-title>{{ texts.LOGIN }}</mat-card-title>
     </mat-card-header>
 
     <form (ngSubmit)="onLogin()">
       <mat-card-content>
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Usuario</mat-label>
+          <mat-label>{{ texts.USER }}</mat-label>
           <input matInput [(ngModel)]="userData.username" name="username" placeholder="Ej. juan perez" required>
           <mat-icon matSuffix>person</mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Contraseña</mat-label>
+          <mat-label>{{ texts.PASSWORD }}</mat-label>
           <input matInput type="password" [(ngModel)]="userData.password" name="password" placeholder="Tu clave" required>
           <mat-icon matSuffix>lock</mat-icon>
         </mat-form-field>
@@ -21,7 +21,7 @@
 
       <mat-card-actions>
         <button mat-raised-button color="primary" type="submit" class="full-width">
-          ENTRAR
+          {{ texts.ENTER }}
         </button>
       </mat-card-actions>
     </form>

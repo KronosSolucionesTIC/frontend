@@ -10,14 +10,13 @@ export class MenuService {
 
   menu = signal<Menu[]>([]);
 
-  getMenu() {
+  getMenu(): void {
     this.http.get<ApiResponse<Menu[]>>(ENDPOINTS.MENU).subscribe({
       next: (res) => {
         if (res.success) {
           this.menu.set(res.data);
         }
-      },
-      error: (err) => console.error('Error cargando el menú', err)
+      }
     });
   }
 }

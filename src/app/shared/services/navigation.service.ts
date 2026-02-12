@@ -1,7 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { HttpHeaders } from '@angular/common/http';
 import { inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +12,17 @@ export class NavigationService {
 
   constructor() { }
 
-  openSnackBar(message: string) {
+  openSnackBar(message: string): MatSnackBarRef<TextOnlySnackBar> {
     return this._snackBar.open(message, 'Cerrar', {
         duration: 3000
       });
+  }
+
+  buildHeaders() : HttpHeaders {
+    const token = this.getToken();    
+    const headers = this.getHeaders(token);
+
+    return headers;
   }
 
   private getToken(): string {
@@ -24,18 +31,10 @@ export class NavigationService {
     if (isPlatformBrowser(this.platformId)) {
       token = localStorage.getItem('token') || '';
     }
-
     return token;
   }
 
   private getHeaders(token: string) : HttpHeaders {
     return new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  }
-
-  buildHeaders() : HttpHeaders {
-    const token = this.getToken();    
-    const headers = this.getHeaders(token);
-
-    return headers;
   }
 }

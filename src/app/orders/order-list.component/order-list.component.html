@@ -1,18 +1,18 @@
 <div class="container" style="min-height: 75vh;">
   <div class="actions-container">
-    <button matButton="tonal" (click)="openDialog()">Nueva orden</button>
+    <button matButton="tonal" (click)="openDialog()">{{ texts.NEW }}</button>
   </div>
 
-  <h2>Lista de ordenes</h2>
+  <h2>{{ texts.TITLE }}</h2>
   {{ orders | json }}
   <table>
     <thead>
       <tr>
-        <th>Nombre</th>
-        <th>Email</th>
-        <th>Total</th>
-        <th>Modificar</th>
-        <th>Eliminar</th>
+        <th>{{ texts.NAME }}</th>
+        <th>{{ texts.EMAIL }}</th>
+        <th>{{ texts.TOTAL }}</th>
+        <th>{{ texts.MODYFY }}</th>
+        <th>{{ texts.ELIMINATE }}</th>
       </tr>
     </thead>
     <tbody>
@@ -34,7 +34,7 @@
         </tr>
       } @empty {
         <tr>
-          <td colspan="3">No hay ordenes registradas.</td>
+          <td colspan="3">{{ texts.EMPTY }}</td>
         </tr>
       }
       <tr>

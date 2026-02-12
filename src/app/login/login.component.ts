@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { TEXTS } from '../core/constants/texts';
 
 @Component({
   selector: 'app-login',
@@ -17,13 +18,14 @@ import { MatIconModule } from '@angular/material/icon';
 export class LoginComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
+  readonly texts = TEXTS.LOGIN;
 
   userData = {
     username: '',
     password: ''
   };
 
-  onLogin() {
+  onLogin(): void {
     this.authService.login(this.userData.username, this.userData.password).subscribe({
       next: (response) => {
         if (response.success) {
@@ -31,9 +33,8 @@ export class LoginComponent {
           this.router.navigate(['/menu']);
         }
       },
-      error: (err) => {
-        console.error('Error en el login', err);
-        alert('Credenciales incorrectas');
+      error: () => {
+        alert(this.texts.ERROR);
       }
     });
   }

@@ -1,18 +1,18 @@
 <div class="container" style="min-height: 75vh;">
   <div class="actions-container">
-    <button matButton="tonal" (click)="openDialog()">Nuevo cliente</button>
+    <button matButton="tonal" (click)="openDialog()">{{ texts.NEW }} </button>
   </div>
 
-  <h2>Lista de Clientes</h2>
+  <h2>{{ texts.TITLE }}</h2>
   {{ clients | json }}
   <table>
     <thead>
       <tr>
-        <th>Nombre</th>
-        <th>Email</th>
-        <th>Fecha Registro</th>
-        <th>Modificar</th>
-        <th>Eliminar</th>
+        <th>{{ texts.NAME }}</th>
+        <th>{{ texts.EMAIL }}</th>
+        <th>{{ texts.REGISTRATION_DATE }}</th>
+        <th>{{ texts.MODIFY }}</th>
+        <th>{{ texts.ELIMINATE }}</th>
       </tr>
     </thead>
     <tbody>
@@ -34,9 +34,10 @@
         </tr>
       } @empty {
         <tr>
-          <td colspan="5">No hay clientes registrados.</td>
+          <td colspan="5">{{ texts.EMPTY }}</td>
         </tr>
       }
     </tbody>
   </table>
+
 </div>

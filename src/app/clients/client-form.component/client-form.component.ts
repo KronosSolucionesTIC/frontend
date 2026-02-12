@@ -9,6 +9,7 @@ import { Dialog } from '@angular/cdk/dialog';
 import { ClientService } from '../services/client.service';
 import { NavigationService } from '../../shared/services/navigation.service';
 import { Client } from '../intefaces/client.interface';
+import { TEXTS } from '../../core/constants/texts';
 
 @Component({
   selector: 'app-client-form.component',
@@ -27,10 +28,10 @@ export class ClientFormComponent {
   readonly dialogRef = inject(MatDialogRef<Dialog>);
   readonly clientService = inject(ClientService);
   readonly navigationService = inject(NavigationService);
-  readonly enviado = signal(false);
   readonly form: FormGroup;
   readonly data = inject<{ client: Client }>(MAT_DIALOG_DATA, { optional: true });
   readonly isEditMode = signal(!!this.data?.client);
+  readonly texts = TEXTS.CLIENTS;
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -39,7 +40,7 @@ export class ClientFormComponent {
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (!this.form.valid) {
       this.form.markAllAsTouched();
       return;
@@ -52,15 +53,15 @@ export class ClientFormComponent {
     request.subscribe({
       next: (response: { success: boolean; }) => {
         if (response.success) {
-          const accion = this.isEditMode() ? 'actualizado' : 'creado';
-          this.navigationService.openSnackBar(`Cliente ${accion} correctamente`);
+          const action = this.isEditMode() ? this.texts.UPDATED : this.texts.CREATED;
+          this.navigationService.openSnackBar(this.texts.SUCCESS_MESSAGE(action));
           this.dialogRef.close(true);
         }
       }
     });  
   }
 
-  onCancel() {
+  onCancel(): void {
     this.form.reset();
     this.dialogRef.close();
   }
